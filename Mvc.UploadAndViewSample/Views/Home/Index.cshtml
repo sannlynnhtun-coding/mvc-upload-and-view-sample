@@ -1,0 +1,45 @@
+﻿@model Mvc.UploadAndViewSample.Models.ImageViewModel
+
+@{
+    ViewData["Title"] = "Image Upload";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">ASP.NET Core Image Upload (Configurable)</h4>
+        </div>
+        <div class="card-body">
+            <p class="card-text">Select an image file and click "Upload" to save it to a custom path defined in <code>appsettings.json</code>.</p>
+
+            <form asp-action="Index" asp-controller="Home" method="post" enctype="multipart/form-data" class="mt-4">
+                <div class="mb-3">
+                    <label for="imageFile" class="form-label">Choose Image</label>
+                    <input type="file" name="imageFile" id="imageFile" class="form-control" accept="image/*" />
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-upload"></i> Upload Image
+                </button>
+            </form>
+
+            <hr />
+
+            <h5 class="mt-4">Uploaded Image:</h5>
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <div class="mt-3 text-center">
+                    <img src="@Url.Content(Model.ImageUrl)" class="img-fluid rounded shadow" alt="Uploaded Image" style="max-height: 400px;" />
+                    <p class="mt-2 text-success">@ViewBag.SuccessMessage</p>
+                    <p class="text-muted small">Image Path: <code>@Model.ImageUrl</code></p>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info mt-3" role="alert">
+                    No image has been uploaded yet.
+                </div>
+            }
+        </div>
+    </div>
+</div>
